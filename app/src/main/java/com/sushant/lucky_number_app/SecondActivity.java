@@ -29,6 +29,18 @@ public class SecondActivity extends AppCompatActivity {
         int randomNumber = generateRandomNumbers();
         String setLuckyNumber = "" + randomNumber;
         luckyNumber.setText(setLuckyNumber);
+
+        shareBtn.setOnClickListener(v -> shareData(userName, randomNumber));
+    }
+
+    public void shareData(String userName, Integer luckyNumber){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, userName + " got lucky today!");
+        intent.putExtra(Intent.EXTRA_TEXT, "His lucky number is " + luckyNumber);
+
+        startActivity(Intent.createChooser(intent, "Choose Platform!"));
     }
 
     public int generateRandomNumbers(){
