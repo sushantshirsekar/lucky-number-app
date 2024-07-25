@@ -1,24 +1,39 @@
 package com.sushant.lucky_number_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Random;
 
 public class SecondActivity extends AppCompatActivity {
+
+    TextView welcomeText, luckyNumber;
+    Button shareBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_second);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        welcomeText = findViewById(R.id.welcome_text);
+        luckyNumber = findViewById(R.id.lucky_number);
+        shareBtn = findViewById(R.id.share_btn);
+        Intent intent = getIntent();
+        String userName = intent.getStringExtra("userName");
+        int randomNumber = generateRandomNumbers();
+        String setLuckyNumber = "" + randomNumber;
+        luckyNumber.setText(setLuckyNumber);
+    }
+
+    public int generateRandomNumbers(){
+        Random random = new Random();
+        int upperLimit = 1000;
+        return random.nextInt(upperLimit);
     }
 }
